@@ -1,70 +1,183 @@
-# Getting Started with Create React App
+# AirWatch – AI-Based Air Pollution Monitoring and Hotspot Detection System
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Overview
 
-## Available Scripts
+AirWatch is an AI-powered air quality monitoring and prediction system designed to analyze pollution levels, predict air quality categories, and identify historical pollution hotspots using machine learning.
 
-In the project directory, you can run:
+The system uses pollutant concentrations and environmental parameters to generate air quality predictions and provide insights into historical pollution patterns through an interactive web dashboard.
 
-### `npm start`
+## Key Features
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- **Air Quality Prediction:** Uses a Random Forest classifier to predict air quality categories based on pollutant concentrations.
+- **Interactive Dashboard:** Displays air quality statistics, pollutant information, and historical trends.
+- **Pollutant Analysis:** Analyzes PM2.5, PM10, CO, NO₂, SO₂, Ozone, and other environmental parameters.
+- **Historical Hotspot Detection:** Identifies dates with significantly elevated AQI values using historical pollution records.
+- **REST API Integration:** Uses Flask-based REST APIs to connect the machine learning model with the React frontend.
+- **Real-Time Predictions:** Accepts pollutant values and returns predicted air quality categories through the application.
+- **Data Visualization:** Presents pollution trends and insights through interactive charts.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Technology Stack
 
-### `npm test`
+| Component | Technologies |
+|---|---|
+| Frontend | React.js, HTML, CSS, JavaScript |
+| Backend | Python, Flask |
+| Machine Learning | Scikit-learn, Random Forest |
+| Data Processing | Pandas, NumPy |
+| Model Serialization | Joblib |
+| API Integration | REST API |
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Machine Learning Approach
 
-### `npm run build`
+AirWatch uses supervised machine learning to classify air quality based on pollutant concentrations and environmental parameters.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Algorithm:** Random Forest Classifier
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+**Input Features:**
+- PM2.5
+- PM10
+- Carbon Monoxide (CO)
+- Nitrogen Dioxide (NO₂)
+- Sulfur Dioxide (SO₂)
+- Ozone (O₃)
+- Aerosol
+- Dust
+- UV Index
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Prediction Output:**
 
-### `npm run eject`
+The model classifies air quality into the following categories:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+- Good
+- Moderate
+- Unhealthy for Sensitive Groups (USG)
+- Unhealthy
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## System Architecture
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+AirWatch follows a frontend-backend architecture consisting of the following components:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+1. **Frontend:** React.js provides an interactive dashboard for displaying air quality information and accepting user inputs.
+2. **Backend:** Flask handles API requests and processes prediction requests.
+3. **Machine Learning Model:** The trained Random Forest model generates air quality predictions.
+4. **Dataset:** Historical air quality records are used for model training, analysis, and hotspot identification.
+5. **REST APIs:** Enable communication between the frontend and backend for predictions and historical data retrieval.
 
-## Learn More
+## Project Structure
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```text
+air-pollution-monitor/
+│
+├── app.py
+├── prepare_dataset.py
+├── train_model.py
+│
+├── air_quality_cleaned.csv
+├── air_quality_historical.csv
+├── air_quality_model.pkl
+├── city_info.csv
+├── data_dictionary.csv
+├── dataset-metadata.json
+│
+├── src/
+│   ├── App.js
+│   ├── App.css
+│   └── inspect_dataset.py
+│
+└── README.md
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Installation and Setup
 
-### Code Splitting
+### Prerequisites
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Python 3.x
+- Node.js and npm
+- Git
 
-### Analyzing the Bundle Size
+### 1. Clone the Repository
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+```bash
+git clone <your-repository-url>
+cd air-pollution-monitor
+```
 
-### Making a Progressive Web App
+### 2. Backend Setup
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Install the required Python dependencies:
 
-### Advanced Configuration
+```bash
+pip install flask flask-cors pandas numpy scikit-learn joblib
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+Start the Flask backend:
 
-### Deployment
+```bash
+python app.py
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+The backend will run at:
 
-### `npm run build` fails to minify
+```text
+http://127.0.0.1:5000
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### 3. Frontend Setup
+
+Open a new terminal and install the dependencies:
+
+```bash
+npm install
+```
+
+Start the React development server:
+
+```bash
+npm start
+```
+
+The frontend will be available at:
+
+```text
+http://localhost:3000
+```
+
+## REST API Endpoints
+
+| Endpoint | HTTP Method | Description |
+|---|---|---|
+| `/` | GET | Checks backend server status |
+| `/predict` | POST | Predicts air quality based on pollutant values |
+| `/historical` | GET | Retrieves historical pollution data and hotspot information |
+
+## Historical Hotspot Detection
+
+AirWatch analyzes historical AQI records to identify periods of elevated pollution.
+
+The current implementation identifies high-pollution dates using AQI thresholds rather than geographical sensor locations.
+
+This approach helps analyze historical pollution patterns and recognize periods of increased air pollution.
+
+## Project Objectives
+
+- Develop an AI-based air quality prediction system.
+- Analyze pollutant concentrations and their relationship with air quality.
+- Identify historical periods of elevated pollution.
+- Integrate machine learning models with a full-stack web application.
+- Provide an accessible platform for understanding air pollution patterns.
+
+## Future Enhancements
+
+- Integration with live air quality monitoring APIs.
+- Geographical pollution mapping and location-based hotspot detection.
+- Improved prediction accuracy using advanced machine learning models.
+- Automated alerts for elevated pollution levels.
+- Integration with IoT-based air quality sensors.
+
+## Disclaimer
+
+AirWatch currently uses historical air quality datasets and user-provided pollutant values for analysis and predictions. It does not directly collect live readings from physical air quality sensors.
+
+---
+
+**AirWatch – Making Air Quality Insights More Accessible Through Artificial Intelligence.**
